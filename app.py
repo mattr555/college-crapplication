@@ -7,6 +7,7 @@ import bottle
 import markovify
 import json
 from google.appengine.ext import ndb
+from google.appengine.api import memcache
 from secret import essay_password
 
 class Essay(ndb.Model):
@@ -46,19 +47,29 @@ def add_essay():
 
 @bottle.route('/colleges_available')
 def colleges_available():
+    cache = memcache.get('colleges')
+    if cache:
+        return json.dumps(cache.split(','))
     s = set()
     for e in Essay.query():
         for c in e.colleges:
             s.add(c)
+    memcache.set(key='colleges', value=','.join(s), time=60*10)
     return json.dumps(list(s))
 
 @bottle.route('/patrons')
 def patrons():
-    s = set()
-    for e in Essay.query():
-        s.add(e.author)
+    cache = memcache.get('patrons')
+    if cache:
+        resp = cache
+    else:
+        s = set()
+        for e in Essay.query():
+            s.add(e.author)
+        resp = '\n'.join(s)
+        memcache.set(key='patrons', value=resp, time=60*10)
     bottle.response.content_type = 'text/plain'
-    return 'This work would not be possible without the generous donations of the following patrons of the arts:\n\n{}'.format('\n'.join(s))
+    return 'This work would not be possible without the generous donations of the following patrons of the arts:\n\n' + resp
 
 @bottle.route('/')
 @bottle.route('/<fn:path>')
@@ -68,4 +79,3 @@ def index(fn='index.html'):
 bottle.debug(True)
 bottle.run(server='gae')
 application = bottle.app()
-
