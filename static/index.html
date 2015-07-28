@@ -3,11 +3,14 @@
 <head>
 	<meta charset="UTF-8">
 	<title>College Crapplication</title>
+	<style>
+		body {font-family: "courier";}
+	</style>
 </head>
 <body>
 	<h1>college crapplication</h1>
-	<p>a project by matt {ramina,kumar}</p>
-	<p><a href="/patrons">the generous patrons</a></p>
+	<p>a project by matt {<a href="https://twitter.com/mattr555">ramina</a>,<a href="https://twitter.com/Kumoneyy">kumar</a>}</p>
+	<p><a href="/patrons">the generous patrons</a> | <a href="https://github.com/mattr555/college-crapplication">github</a></p>
 	<form id="form">
 		how many sentences? <input id="sentences" type="number" value="3"><br>
 		which college? <select id="college"></select>
@@ -41,7 +44,7 @@
 		});
 
 		$.getJSON('/colleges_available', function(data){
-			var options = '<option value="">All</option>';
+			var options = '<option value="">All (best results)</option>';
 			for (var i = 0; i < data.length; i++){
 				options += '<option value="' + data[i] + '">' + data[i] + '</option>';
 			}
