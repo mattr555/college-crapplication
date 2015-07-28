@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>College Crapplication</title>
+</head>
+<body>
+	<h1>college crapplication</h1>
+	<p>a project by matt {ramina,kumar}</p>
+	<p><a href="/patrons">the generous patrons</a></p>
+	<form id="form">
+		how many sentences? <input id="sentences" type="number" value="3"><br>
+		which college? <select id="college"></select>
+		<input type="submit" value="go">
+	</form>	
+	<div id="text"></div>
+
+	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		$('#form').submit(function(e){
+			var sentences = $('#sentences').val(),
+				college = $('#college').val(),
+				url;
+
+			e.preventDefault();
+			if (!(sentences > 0 && sentences < 50)){
+				$('#text').html('( ͡° ͜ʖ ͡°)');
+				return;
+			}
+
+			if (college) {
+				url = '/run/' + sentences + '/' + college;
+			} else {
+				url = '/run/' + sentences;
+			}
+
+			$.get(url, function(data){
+				$('#text').html(data);
+			})
+		});
+
+		$.getJSON('/colleges_available', function(data){
+			var options = '<option value="">All</option>';
+			for (var i = 0; i < data.length; i++){
+				options += '<option value="' + data[i] + '">' + data[i] + '</option>';
+			}
+			$('#college').html(options);
+		})
+	})
+	</script>
+</body>
+</html>
