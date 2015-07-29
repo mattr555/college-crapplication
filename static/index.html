@@ -10,12 +10,14 @@
 <body>
 	<h1>college crapplication</h1>
 	<p>a project by matt {<a href="https://twitter.com/mattr555">ramina</a>,<a href="https://twitter.com/Kumoneyy">kumar</a>}</p>
-	<p><a href="/patrons">the generous patrons</a> | <a href="https://github.com/mattr555/college-crapplication">github</a></p>
+	<p><a href="/patrons">generous patrons</a> | <a href="https://github.com/mattr555/college-crapplication">github</a></p>
+	<p>donate your essay(s) to collegemarkovchain@gmail.com</p>
 	<form id="form">
 		how many sentences? <input id="sentences" type="number" value="3"><br>
 		which college? <select id="college"></select>
 		<input type="submit" value="go">
 	</form>	
+	<br><br>
 	<div id="text"></div>
 
 	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -51,6 +53,16 @@
 			$('#college').html(options);
 		})
 	})
+	</script>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-65709239-1', 'auto');
+	  ga('send', 'pageview');
+
 	</script>
 </body>
 </html>
